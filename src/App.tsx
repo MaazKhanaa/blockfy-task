@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import { useRoutes } from 'react-router-dom';
+
+import { ErrorBoundary } from 'react-error-boundary';
+
+
+import { APP_ROUTES } from './routes';
+
+import { ErrorBoundaryComponent } from './common';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+export const App = () => {
+
+  const pages = useRoutes(APP_ROUTES);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ErrorBoundary FallbackComponent={({ error }) => <ErrorBoundaryComponent error={error} />}>
+        {pages}
+      </ErrorBoundary>
+      <ToastContainer />
     </div>
   );
 }
-
-export default App;
